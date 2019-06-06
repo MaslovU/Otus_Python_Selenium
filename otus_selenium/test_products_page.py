@@ -1,10 +1,12 @@
 """Tests"""
 import pytest
-from otus_selenium.models.utility_methods import *
+from otus_selenium.models.utility_methods import create_list, \
+    edit_items_kotlin, edit_items_cat, delete_items
 
 
 @pytest.mark.usefixtures('product_page_add')
-@pytest.mark.usefixtures('product_page_choise')
+@pytest.mark.usefixtures('product_page_choice')
+@pytest.mark.usefixtures('product_page_waiting')
 @pytest.mark.usefixtures('login_for_test')
 @pytest.mark.usefixtures('open_login_for_test')
 class TestProductPage:

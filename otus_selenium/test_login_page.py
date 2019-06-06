@@ -3,7 +3,7 @@ import pytest
 
 
 @pytest.mark.usefixtures('login_page')
-class TestLoginPage(object):
+class TestLoginPage:
     """Test class"""
 
     @pytest.mark.usefixtures('login')

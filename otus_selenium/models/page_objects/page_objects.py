@@ -1,4 +1,9 @@
 """Page_Objects"""
+from selenium.common.exceptions import NoSuchElementException, TimeoutException
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as ec
+
 from otus_selenium.models.page import BasePage
 from otus_selenium.models.locator import BaseLocators, LoginPageLocators, ProductsPageLocators
 
@@ -49,9 +54,15 @@ class ProductsPage(BasePage):
         """Catalog"""
         self.driver.find_element(*BaseLocators.CATALOG).click()
 
-    def products_navigation(self):
+    def products_navigation(self, delay=15):
         """Products"""
-        self.driver.find_element(*BaseLocators.PRODUCTS).click()
+        try:
+            WebDriverWait(self.driver, delay)\
+                .until(ec.presence_of_element_located((By.XPATH, '//*[@id="collapse1"]/li[2]/a')))
+            element = self.driver.find_element(By.XPATH, '//*[@id="collapse1"]/li[2]/a').click()
+            return element
+        except (NoSuchElementException, TimeoutException):
+            return False
 
     def products_navigation_two(self):
         """Products"""

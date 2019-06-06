@@ -1,11 +1,11 @@
 """Conftest"""
 import sys
+import time
 import pytest
 from selenium import webdriver
 from selenium.webdriver import ChromeOptions, FirefoxOptions
-from otus_selenium.models.page_objects.page_objects import LoginPage
-from otus_selenium.models.page_objects.page_objects import ProductsPage
-import time
+from otus_selenium.models.page_objects.page_objects import *
+
 
 CHROMEDRIVERPATH = "/home/yury/PycharmProjects/Otus_Selenium/otus_selenium/chromedriver"
 FIREFOXDRIVERPATH = '/home/yury/PycharmProjects/Otus_Selenium/otus_selenium/geckodriver'
@@ -24,6 +24,12 @@ def pytest_addoption(parser):
         action="store",
         default="http://localhost/",
         help="default url address localhost/opencart/"
+    )
+    parser.addoption(
+        "--time_out",
+        action="store",
+        default=5,
+        help="default time for waiting 5 sec"
     )
 
 
@@ -59,6 +65,7 @@ def driver(request):
     else:
         print('Unsupported browser!')
         sys.exit(1)
+    w_d.set_page_load_timeout(1000)
     yield w_d
     w_d.quit()
 
@@ -140,7 +147,7 @@ def products_page(driver):
 
 
 @pytest.fixture(scope='module')
-def product_page_choise(products_page):
+def product_page_choice(products_page):
     """Page choice"""
     products_page.catalog_navigation()
     products_page.products_navigation()
@@ -156,3 +163,9 @@ def product_page_add(products_page):
     products_page.model_of_item('1985')
     products_page.price_of_item('11')
     products_page.save_button()
+
+
+@pytest.fixture(scope='module')
+def product_page_waiting(request):
+    time_of_waiting = request.config.getoption("--time_out")
+    time.sleep(time_of_waiting)
