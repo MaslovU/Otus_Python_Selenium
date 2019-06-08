@@ -55,3 +55,8 @@ def delete_items(driver, listoc):
     wait.until(ec.element_to_be_clickable((By.XPATH, '//*[@id="content"]/div[1]/div/div/button[3]'))).click()
     driver.switch_to_alert().accept()
     driver.refresh()
+
+
+def add_new_image(driver):
+    driver.find_element_by_xpath('//*[@id="form-product"]/div/table/tbody/tr[1]/td[1]/input').click()
+    driver.find_element_by_xpath('//*[@id="form-product"]/ul/li[9]/a').click()

@@ -118,3 +118,15 @@ class ProductsPage(BasePage):
 
     def product_link(self):
         self.driver.find_element(*ProductsPageLocators.PRODUCT_LINK).click()
+
+    def image_button(self):
+        self.driver.find_element(*ProductsPageLocators.IMAGE_BUTTON).click()
+
+    def click_on_image(self):
+        self.driver.find_element(*ProductsPageLocators.CLICK_ON_IMAGE).click()
+
+    def button_edit_image(self):
+        self.driver.find_element(*ProductsPageLocators.BUTTON_EDIT_IMAGE).click()
+
+    def button_delete_image(self):
+        self.driver.find_element(*ProductsPageLocators.BUTTON_DELETE_IMAGE).click()

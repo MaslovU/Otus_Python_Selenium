@@ -2,6 +2,7 @@
 import sys
 import time
 import pytest
+import os
 from selenium import webdriver
 from selenium.webdriver import ChromeOptions, FirefoxOptions
 from otus_selenium.models.page_objects.page_objects import *
@@ -16,7 +17,7 @@ def pytest_addoption(parser):
     parser.addoption(
         "--name_browser",
         action="store",
-        default="firefox",
+        default="chrome",
         help="my option: chrome or firefox"
     )
     parser.addoption(
@@ -48,7 +49,7 @@ def driver(request):
         profile.accept_untrusted_certs = True
         options = FirefoxOptions()
         options.add_argument("--start-fullscreen")
-        options.add_argument("--headless")
+        # options.add_argument("--headless")
         w_d = webdriver.Firefox(firefox_options=options,
                                 executable_path=FIREFOXDRIVERPATH)
         w_d.maximize_window()
@@ -58,14 +59,14 @@ def driver(request):
         capabilities['acceptInsecureCerts'] = True
         options = ChromeOptions()
         options.add_argument("--start-fullscreen")
-        options.add_argument("--headless")
+        # options.add_argument("--headless")
         w_d = webdriver.Chrome(chrome_options=options,
                                executable_path=CHROMEDRIVERPATH)
         w_d.fullscreen_window()
     else:
         print('Unsupported browser!')
         sys.exit(1)
-    w_d.set_page_load_timeout(1000)
+    w_d.set_page_load_timeout(100)
     yield w_d
     w_d.quit()
 
@@ -97,7 +98,7 @@ def login(login_page):
     login_page.set_password('admin')
     login_page.login()
     login_page.close_button()
-    time.sleep(5)
+    time.sleep(1)
 
 
 @pytest.fixture(scope='module')
@@ -169,3 +170,20 @@ def product_page_add(products_page):
 def product_page_waiting(request):
     time_of_waiting = request.config.getoption("--time_out")
     time.sleep(time_of_waiting)
+
+
+@pytest.fixture(scope='function')
+def action_with_image(products_page):
+    products_page.edit_button()
+    products_page.image_button()
+    products_page.click_on_image()
+
+
+@pytest.fixture()
+def add_images(products_page, driver):
+    products_page.button_edit_image()
+
+
+@pytest.fixture()
+def delete_image(products_page, driver):
+    products_page.button_delete_image()

@@ -42,3 +42,7 @@ class ProductsPageLocators:
     FIRST_EDIT_BUTTON = (By.XPATH, '//*[@id="form-product"]/div/table/tbody/tr[1]/td[8]/a')
     HREF_PRODUCT = (By.XPATH, '//*[@id="content"]/div[1]/div/ul/li[2]/a')
     PRODUCT_LINK = (By.XPATH, '//*[@id="content"]/div[1]/div/ul/li[2]/a')
+    IMAGE_BUTTON = (By.XPATH, '//*[@id="form-product"]/ul/li[9]/a')
+    CLICK_ON_IMAGE = (By.XPATH, '//*[@id="thumb-image"]/img')
+    BUTTON_EDIT_IMAGE = (By.ID, 'button-image')
+    BUTTON_DELETE_IMAGE = (By.ID, 'button_clear')

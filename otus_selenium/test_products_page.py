@@ -1,10 +1,12 @@
 """Tests"""
 import pytest
+import os
 from otus_selenium.models.utility_methods import create_list, \
     edit_items_kotlin, edit_items_cat, delete_items
+import time
 
 
-@pytest.mark.usefixtures('product_page_add')
+# @pytest.mark.usefixtures('product_page_add')
 @pytest.mark.usefixtures('product_page_choice')
 @pytest.mark.usefixtures('product_page_waiting')
 @pytest.mark.usefixtures('login_for_test')
@@ -37,3 +39,19 @@ class TestProductPage:
         delete_items(driver, listoc)
         new_list = create_list(driver)
         assert 'Kotlin' not in new_list
+
+    @pytest.mark.usefixtures('add_images')
+    @pytest.mark.usefixtures('action_with_image')
+    def test_add_three_images(self, driver):
+        """Add images"""
+        time.sleep(2)
+        dirname = os.path.dirname(__file__)
+        filename = os.path.join(dirname, 'image3.jpg')
+        input_manager = driver.find_element_by_css_selector('button-upload')
+        # driver.find_element_by_id('button-upload').click()
+        # input_manager = driver.find_element_by_id('//*[@id="form-upload"]')
+        input_manager.send_keys(filename)
+
+    def test_delete_images(self):
+        """Delete images"""
+        pass
