@@ -108,7 +108,16 @@ def login_for_test(login_page):
     login_page.set_password('admin')
     login_page.login()
     login_page.close_button()
-    time.sleep(5)
+    time.sleep(1)
+
+
+@pytest.fixture(scope='module')
+def login_for_constructor(login_page):
+    """Login"""
+    login_page.set_username('demo')
+    login_page.set_password('demo')
+    login_page.login()
+    time.sleep(1)
 
 
 @pytest.fixture(scope='function')

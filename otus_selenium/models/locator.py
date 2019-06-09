@@ -46,3 +46,9 @@ class ProductsPageLocators:
     CLICK_ON_IMAGE = (By.XPATH, '//*[@id="thumb-image"]/img')
     BUTTON_EDIT_IMAGE = (By.ID, 'button-image')
     BUTTON_DELETE_IMAGE = (By.ID, 'button_clear')
+
+
+class ConstructorPageLocator:
+    """Constructor"""
+    NAME_PRODUCT = (By.ID, 'input-custom-name')
+    LINK_FOR_PRODUCT = (By.ID, 'input-custom-link')

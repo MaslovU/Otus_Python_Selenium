@@ -1,8 +1,7 @@
 """Utility methods"""
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-
 from selenium.webdriver.support import expected_conditions as ec
+from selenium.webdriver.support.ui import WebDriverWait
 
 
 def create_list(driver):
@@ -60,3 +59,12 @@ def delete_items(driver, listoc):
 def add_new_image(driver):
     driver.find_element_by_xpath('//*[@id="form-product"]/div/table/tbody/tr[1]/td[1]/input').click()
     driver.find_element_by_xpath('//*[@id="form-product"]/ul/li[9]/a').click()
+
+
+def create_constructor_list(driver):
+    """Constructor list"""
+    cons_list = driver.find_elements_by_class_name('item-title')
+    listok = []
+    for i in cons_list:
+        listok.append(i.text)
+    return listok
