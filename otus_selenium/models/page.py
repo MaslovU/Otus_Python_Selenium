@@ -20,13 +20,15 @@ class BasePage:
             'arguments[0].attributes[index].value }; return items;',
             element)
 
-    # def _get_attribute_(self, element, attribute):
-    #     """Get attribute"""
-    #     return element.get_attribute(attribute)
+    @staticmethod
+    def _get_attribute_(element, attribute):
+        """Get attribute"""
+        return element.get_attribute(attribute)
 
-    # def _get_css_attribute_(self, element, prop):
-    #     """Get CSS"""
-    #     return element.value_of_css_property(prop)
+    @staticmethod
+    def _get_css_attribute_(element, prop):
+        """Get CSS"""
+        return element.value_of_css_property(prop)
 
     def _find_and_clear_element_(self, by, value):
         """Find and clear"""
@@ -34,10 +36,11 @@ class BasePage:
         element.send_keys(Keys.CONTROL + "a")
         element.send_keys(Keys.BACK_SPACE)
 
-    # def _clear_element_(self, element):
-    #     """Clear"""
-    #     element.send_keys(Keys.CONTROL + "a")
-    #     element.send_keys(Keys.BACK_SPACE)
+    @staticmethod
+    def _clear_element_(element):
+        """Clear"""
+        element.send_keys(Keys.CONTROL + "a")
+        element.send_keys(Keys.BACK_SPACE)
 
     def _wait_element_(self, by, value, delay=25):
         """Wait"""

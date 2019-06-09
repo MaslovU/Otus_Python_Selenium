@@ -25,10 +25,10 @@ class LoginPage(BasePage):
     def title(self):
         """Title"""
         self.driver.find_element(*BaseLocators.PANEL_TITLE)
-    #
-    # def clear_password(self):
-    #     """Clear element"""
-    #     self._clear_element_(self.driver.find_element(*LoginPageLocators.PASSWORD))
+
+    def clear_password(self):
+        """Clear element"""
+        self.driver.find_element(*LoginPageLocators.PASSWORD).clear()
 
     def close_button(self):
         """Close button"""

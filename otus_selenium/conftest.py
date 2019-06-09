@@ -2,7 +2,6 @@
 import sys
 import time
 import pytest
-import os
 from selenium import webdriver
 from selenium.webdriver import ChromeOptions, FirefoxOptions
 from otus_selenium.models.page_objects.page_objects import *
@@ -49,7 +48,7 @@ def driver(request):
         profile.accept_untrusted_certs = True
         options = FirefoxOptions()
         options.add_argument("--start-fullscreen")
-        # options.add_argument("--headless")
+        options.add_argument("--headless")
         w_d = webdriver.Firefox(firefox_options=options,
                                 executable_path=FIREFOXDRIVERPATH)
         w_d.maximize_window()
@@ -59,7 +58,7 @@ def driver(request):
         capabilities['acceptInsecureCerts'] = True
         options = ChromeOptions()
         options.add_argument("--start-fullscreen")
-        # options.add_argument("--headless")
+        options.add_argument("--headless")
         w_d = webdriver.Chrome(chrome_options=options,
                                executable_path=CHROMEDRIVERPATH)
         w_d.fullscreen_window()
@@ -170,7 +169,7 @@ def product_page_choice_pro(products_page):
     products_page.products_navigation_pro()
 
 
-@pytest.fixture(scope='class')
+@pytest.fixture(scope='module')
 def product_page_add(products_page):
     """Page add"""
     products_page.add_new_item_button()
@@ -187,7 +186,6 @@ def product_page_add_pro(products_page):
     """Page add"""
     products_page.add_new_item_button()
     products_page.add_product_name('Abba')
-    # products_page.add_meta_tag('abba2')
     products_page.data_tag()
     products_page.model_of_item('1985')
     products_page.price_of_item('11')

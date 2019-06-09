@@ -20,7 +20,7 @@ def create_list(driver):
 
 def edit_items_kotlin(driver, listoc):
     """Edit item"""
-    global index
+    index = None
     try:
         index = listoc.index('Kotlin')
     except ValueError:
@@ -46,14 +46,15 @@ def edit_items_cat(driver, listoc):
 def delete_items(driver, listoc):
     """Delete item"""
     index = listoc.index('Kotlin')
+    print("Index equal = ", index)
     driver\
         .find_element_by_xpath('//*[@id="form-product"]/div/table/tbody/tr[' + str(index + 1) + ']/td[1]/input') \
         .click()
-    # driver.find_element_by_xpath('//*[@id="content"]/div[1]/div/div/button[3]').click()
     wait = WebDriverWait(driver, 5)
     wait.until(ec.element_to_be_clickable((By.XPATH, '//*[@id="content"]/div[1]/div/div/button[3]'))).click()
     driver.switch_to_alert().accept()
     driver.refresh()
+    print("After refresh")
 
 
 def add_new_image(driver):
