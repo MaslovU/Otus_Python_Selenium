@@ -68,6 +68,10 @@ class ProductsPage(BasePage):
         """Products"""
         self.driver.find_element(*BaseLocators.PRODUCTS).click()
 
+    def products_navigation_pro(self):
+        """Products"""
+        self.driver.find_element(*BaseLocators.PRODUCTS_FOR_PRO).click()
+
     def add_new_item_button(self):
         """Add new"""
         self.driver.find_element(*ProductsPageLocators.ADD_NEW).click()
@@ -112,21 +116,38 @@ class ProductsPage(BasePage):
         """Edit"""
         self.driver.find_element(*ProductsPageLocators.FIRST_EDIT_BUTTON).click()
 
+    def edit_for_pro(self):
+        """For pro"""
+        self.driver.find_element(*ProductsPageLocators.EDIT_BUTTON_FOR_PRO).click()
+
     def href_product(self):
         """product"""
         self.driver.find_element(*ProductsPageLocators.HREF_PRODUCT).click()
 
     def product_link(self):
+        """Link"""
         self.driver.find_element(*ProductsPageLocators.PRODUCT_LINK).click()
 
     def image_button(self):
+        """Button"""
         self.driver.find_element(*ProductsPageLocators.IMAGE_BUTTON).click()
 
     def click_on_image(self):
+        """Click on image"""
         self.driver.find_element(*ProductsPageLocators.CLICK_ON_IMAGE).click()
 
+    def click_on_image_pro(self):
+        """For pro"""
+        self.driver.find_element(*ProductsPageLocators.CLICK_ON_IMAGE_PRO).click()
+
+    def click_on_add_pro(self):
+        """For pro"""
+        self.driver.find_element(*ProductsPageLocators.CLICK_ON_ADD).click()
+
     def button_edit_image(self):
+        """Edit"""
         self.driver.find_element(*ProductsPageLocators.BUTTON_EDIT_IMAGE).click()
 
     def button_delete_image(self):
+        """Del"""
         self.driver.find_element(*ProductsPageLocators.BUTTON_DELETE_IMAGE).click()

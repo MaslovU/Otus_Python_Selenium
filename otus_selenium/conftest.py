@@ -163,6 +163,13 @@ def product_page_choice(products_page):
     products_page.products_navigation()
 
 
+@pytest.fixture(scope='function')
+def product_page_choice_pro(products_page):
+    """Page choice"""
+    products_page.catalog_navigation()
+    products_page.products_navigation_pro()
+
+
 @pytest.fixture(scope='class')
 def product_page_add(products_page):
     """Page add"""
@@ -175,8 +182,21 @@ def product_page_add(products_page):
     products_page.save_button()
 
 
+@pytest.fixture(scope='function')
+def product_page_add_pro(products_page):
+    """Page add"""
+    products_page.add_new_item_button()
+    products_page.add_product_name('Abba')
+    # products_page.add_meta_tag('abba2')
+    products_page.data_tag()
+    products_page.model_of_item('1985')
+    products_page.price_of_item('11')
+    products_page.save_button()
+
+
 @pytest.fixture(scope='module')
 def product_page_waiting(request):
+    """For pro"""
     time_of_waiting = request.config.getoption("--time_out")
     time.sleep(time_of_waiting)
 
@@ -188,11 +208,22 @@ def action_with_image(products_page):
     products_page.click_on_image()
 
 
+@pytest.fixture(scope='function')
+def action_with_image_pro(products_page):
+    """For pro"""
+    products_page.edit_for_pro()
+    products_page.image_button()
+    products_page.click_on_add_pro()
+    products_page.click_on_image_pro()
+
+
 @pytest.fixture()
 def add_images(products_page, driver):
+    """Adding"""
     products_page.button_edit_image()
 
 
 @pytest.fixture()
 def delete_image(products_page, driver):
+    """Deleting"""
     products_page.button_delete_image()

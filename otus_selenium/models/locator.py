@@ -12,6 +12,7 @@ class BaseLocators:
     CATALOG = (By.ID, 'menu-catalog')
     # PRODUCTS = (By.XPATH, '/html/body/div[1]/nav/ul/li[2]/ul/li[2]/a')
     PRODUCTS = (By.XPATH, '//*[@id="collapse1"]/li[2]/a')
+    PRODUCTS_FOR_PRO = (By.XPATH, '//*[@id="menu-catalog"]/ul/li[2]')
 
 
 class LoginPageLocators:
@@ -40,10 +41,14 @@ class ProductsPageLocators:
     # CHECK_BOX = (By.NAME, 'selected[]')
     CHECK_BOX = (By.XPATH, '//*[@id="form-product"]/div/table/tbody/tr[1]/td[1]/input')
     FIRST_EDIT_BUTTON = (By.XPATH, '//*[@id="form-product"]/div/table/tbody/tr[1]/td[8]/a')
+    EDIT_BUTTON_FOR_PRO = (By.XPATH, '// *[@id ="form-product"]/div/table/tbody/tr[1]/td[9]/a[2]')
     HREF_PRODUCT = (By.XPATH, '//*[@id="content"]/div[1]/div/ul/li[2]/a')
     PRODUCT_LINK = (By.XPATH, '//*[@id="content"]/div[1]/div/ul/li[2]/a')
     IMAGE_BUTTON = (By.XPATH, '//*[@id="form-product"]/ul/li[9]/a')
     CLICK_ON_IMAGE = (By.XPATH, '//*[@id="thumb-image"]/img')
+    CLICK_ON_IMAGE_PRO = (By.ID, 'thumb-image0')
+    CLICK_ON_ADD = (By.XPATH, '//*[@id="images"]/tfoot/tr/td[2]/button')
+
     BUTTON_EDIT_IMAGE = (By.ID, 'button-image')
     BUTTON_DELETE_IMAGE = (By.ID, 'button_clear')
 
