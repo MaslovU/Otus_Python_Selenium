@@ -11,6 +11,7 @@ class BaseLocators:
     CATALOG = (By.ID, 'menu-catalog')
     PRODUCTS = (By.XPATH, '//*[@id="collapse1"]/li[2]/a')
     PRODUCTS_FOR_PRO = (By.XPATH, '//*[@id="menu-catalog"]/ul/li[2]')
+    DOWNLOAD = (By.XPATH, '//*[@id="collapse1"]/li[8]')
 
 
 class LoginPageLocators:
@@ -50,3 +51,9 @@ class ConstructorPageLocator:
     """Constructor"""
     NAME_PRODUCT = (By.ID, 'input-custom-name')
     LINK_FOR_PRODUCT = (By.ID, 'input-custom-link')
+
+
+class DownloadPageLocator:
+    """Download page locator"""
+    ADD_NEW_BUTTON = (By.XPATH, '//*[@id="content"]/div[1]/div/div/a')
+    DOWNLOAD_NAME_FIELD = (By.XPATH, '//*[@id="form-download"]/div[1]/div/div/input')

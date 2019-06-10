@@ -5,7 +5,7 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as ec
 
 from otus_selenium.models.page import BasePage
-from otus_selenium.models.locator import BaseLocators, LoginPageLocators, ProductsPageLocators
+from otus_selenium.models.locator import BaseLocators, LoginPageLocators, ProductsPageLocators, DownloadPageLocator
 
 
 class LoginPage(BasePage):
@@ -63,6 +63,10 @@ class ProductsPage(BasePage):
             return element
         except (NoSuchElementException, TimeoutException):
             return False
+
+    def download_navigation(self):
+        """Download"""
+        self.driver.find_element(*BaseLocators.DOWNLOAD).click()
 
     def products_navigation_two(self):
         """Products"""
@@ -151,3 +155,15 @@ class ProductsPage(BasePage):
     def button_delete_image(self):
         """Del"""
         self.driver.find_element(*ProductsPageLocators.BUTTON_DELETE_IMAGE).click()
+
+
+class DownloadPage(BasePage):
+    """Download"""
+
+    def add_new_button(self):
+        """Add new file button"""
+        self.driver.find_element(*DownloadPageLocator.ADD_NEW_BUTTON).click()
+
+    def download_file_name(self, file_name):
+        """Download name"""
+        self.driver.find_element(*DownloadPageLocator.DOWNLOAD_NAME_FIELD).send_keys(file_name)
