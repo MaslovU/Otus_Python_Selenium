@@ -6,7 +6,7 @@ from otus_selenium.models.utility_methods import create_list, \
 
 @pytest.mark.usefixtures('product_page_add')
 @pytest.mark.usefixtures('product_page_choice')
-@pytest.mark.usefixtures('product_page_waiting')
+@pytest.mark.usefixtures('page_waiting')
 @pytest.mark.usefixtures('login_for_test')
 @pytest.mark.usefixtures('open_login_for_test')
 class TestProductPage:

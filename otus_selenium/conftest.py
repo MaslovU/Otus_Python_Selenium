@@ -193,7 +193,7 @@ def product_page_add_pro(products_page):
 
 
 @pytest.fixture(scope='module')
-def product_page_waiting(request):
+def page_waiting(request):
     """For pro"""
     time_of_waiting = request.config.getoption("--time_out")
     time.sleep(time_of_waiting)
@@ -225,3 +225,24 @@ def add_images(products_page, driver):
 def delete_image(products_page, driver):
     """Deleting"""
     products_page.button_delete_image()
+
+
+@pytest.fixture(scope='module')
+def download_page(driver):
+    """Product page"""
+    return DownloadPage(driver)
+
+
+@pytest.fixture(scope='module')
+def download_page_choice(products_page):
+    """Download page"""
+    products_page.catalog_navigation()
+    time.sleep(1)
+    products_page.download_navigation()
+
+
+@pytest.fixture(scope='function')
+def action_with_download(download_page):
+    """For pro"""
+    download_page.add_new_button()
+    download_page.download_file_name('image1')
