@@ -14,7 +14,10 @@ def create_list(driver):
     for i in range(1, rowcount+1):
         elem = driver\
             .find_element_by_xpath('//*[@id="form-product"]/div/table/tbody/tr[' + str(i) + ']/td[3]')
-        listoc.append(elem.text)
+        if elem in listoc:
+            pass
+        else:
+            listoc.append(elem.text)
     return listoc
 
 
@@ -46,7 +49,6 @@ def edit_items_cat(driver, listoc):
 def delete_items(driver, listoc):
     """Delete item"""
     index = listoc.index('Kotlin')
-    print("Index equal = ", index)
     driver\
         .find_element_by_xpath('//*[@id="form-product"]/div/table/tbody/tr[' + str(index + 1) + ']/td[1]/input') \
         .click()
@@ -54,7 +56,6 @@ def delete_items(driver, listoc):
     wait.until(ec.element_to_be_clickable((By.XPATH, '//*[@id="content"]/div[1]/div/div/button[3]'))).click()
     driver.switch_to_alert().accept()
     driver.refresh()
-    print("After refresh")
 
 
 def add_new_image(driver):

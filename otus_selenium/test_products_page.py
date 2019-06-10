@@ -14,12 +14,18 @@ class TestProductPage:
 
     def test_current_page(self, driver):
         """Test page"""
+        bad_list = []
+        listoc = create_list(driver)
+        for i in listoc:
+            if i == "Kotlin":
+                bad_list.append(i)
+        if len(bad_list) > 1:
+            delete_items(driver, listoc)
         assert 'product&user_token' in driver.current_url
 
     def test_check_item(self, driver):
         """Check item"""
         listoc = create_list(driver)
-        print(listoc)
         assert "Kotlin" in listoc
 
     def test_edit_item(self, driver):
