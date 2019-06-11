@@ -2,6 +2,7 @@
 import pytest
 from otus_selenium.models.utility_methods import create_list, \
     edit_items_kotlin, edit_items_cat, delete_items
+import logging
 
 
 @pytest.mark.usefixtures('product_page_add')
@@ -15,6 +16,7 @@ class TestProductPage:
     def test_current_page(self, driver):
         """Test page"""
         bad_list = []
+        logging.info('Create new list')
         listoc = create_list(driver)
         for i in listoc:
             if i == "Kotlin":

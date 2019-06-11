@@ -1,14 +1,64 @@
 """Conftest"""
+import logging
 import sys
 import time
+import urllib.parse
+
 import pytest
 from selenium import webdriver
 from selenium.webdriver import ChromeOptions, FirefoxOptions
+from browsermobproxy import Server
 from otus_selenium.models.page_objects.page_objects import *
+from selenium.webdriver.support.events import EventFiringWebDriver, AbstractEventListener
 
 
 CHROMEDRIVERPATH = "/home/yury/PycharmProjects/Otus_Selenium/otus_selenium/chromedriver"
 FIREFOXDRIVERPATH = '/home/yury/PycharmProjects/Otus_Selenium/otus_selenium/geckodriver'
+
+logging.basicConfig(filename='/home/yury/PycharmProjects/selenium_otus/otus_selenium/lolo.log', level=logging.INFO)
+
+server = Server(r'/home/yury/Desktop/browsermob-proxy-2.1.4/bin/browsermob-proxy')
+server.start()
+
+
+@pytest.fixture(scope='session')
+def my_proxy():
+    """My proxy"""
+    proxy = server.create_proxy()
+    proxy.new_har()
+    return proxy
+
+
+class MyListener(AbstractEventListener):
+    """My listener"""
+
+    def before_find(self, by, value, driver):
+        """for logs"""
+        logging.info('Message before find')
+
+    def after_find(self, by, value, driver):
+        """for logs"""
+        logging.info('Message after find')
+
+    def before_click(self, element, driver):
+        """for logs"""
+        logging.info("Start click")
+
+    def after_click(self, element, driver):
+        """for logs"""
+        logging.info('Message after click')
+
+    def before_quit(self, driver):
+        """for logs"""
+        logging.info('before quit')
+
+    def after_quit(self, driver):
+        """for logs"""
+        logging.info('by!')
+
+    def on_exception(self, exception, driver):
+        """for logs"""
+        driver.save_screenshot('/home/yury/PycharmProjects/selenium_otus/otus_selenium/screenshots/exceptions.png')
 
 
 def pytest_addoption(parser):
@@ -34,11 +84,12 @@ def pytest_addoption(parser):
 
 
 @pytest.fixture(scope="session", autouse=True)
-def driver(request):
+def driver(request, my_proxy):
     """Driver"""
     browser = request.config.getoption("--name_browser")
     if browser == 'firefox':
         capabilities = webdriver.DesiredCapabilities.FIREFOX.copy()
+        capabilities['loggingPrefs'] = {'browser': 'ALL'}
         capabilities['timeouts'] = {'implicit': 300000, 'pageLoad': 300000, 'script': 30000}
         capabilities['loggingPrefs'] = {'browser': 'ALL', 'client': 'ALL', 'driver': 'ALL',
                                         'performance': 'ALL', 'server': 'ALL'}
@@ -47,20 +98,30 @@ def driver(request):
         profile.set_preference('app.update.enabled', False)
         profile.accept_untrusted_certs = True
         options = FirefoxOptions()
+        url = urllib.parse.urlparse(my_proxy.proxy).path
+        options.add_argument('--proxy-server=%s' % url)
         options.add_argument("--start-fullscreen")
         options.add_argument("--headless")
-        w_d = webdriver.Firefox(firefox_options=options,
-                                executable_path=FIREFOXDRIVERPATH)
+        w_d = EventFiringWebDriver(webdriver.Firefox(firefox_options=options,
+                                                     executable_path=FIREFOXDRIVERPATH),
+                                   MyListener())
         w_d.maximize_window()
     elif browser == 'chrome':
         capabilities = webdriver.DesiredCapabilities.CHROME.copy()
+        d = webdriver.DesiredCapabilities.CHROME
+        d['loggingPrefs'] = {'performance': 'ALL'}
+        capabilities['loggingPrefs'] = {'browser': 'ALL'}
         capabilities['acceptSslCerts'] = True
         capabilities['acceptInsecureCerts'] = True
         options = ChromeOptions()
+        url = urllib.parse.urlparse(my_proxy.proxy).path
+        options.add_argument('--proxy-server=%s' % url)
         options.add_argument("--start-fullscreen")
         options.add_argument("--headless")
-        w_d = webdriver.Chrome(chrome_options=options,
-                               executable_path=CHROMEDRIVERPATH)
+        w_d = EventFiringWebDriver(webdriver.Chrome(chrome_options=options,
+                                                    executable_path=CHROMEDRIVERPATH,
+                                                    desired_capabilities=d),
+                                   MyListener())
         w_d.fullscreen_window()
     else:
         print('Unsupported browser!')
