@@ -7,7 +7,7 @@ import urllib.parse
 import pytest
 from selenium import webdriver
 from selenium.webdriver import ChromeOptions, FirefoxOptions
-from browsermobproxy import Server
+# from browsermobproxy import Server
 from otus_selenium.models.page_objects.page_objects import *
 from selenium.webdriver.support.events import EventFiringWebDriver, AbstractEventListener
 
@@ -15,18 +15,20 @@ from selenium.webdriver.support.events import EventFiringWebDriver, AbstractEven
 CHROMEDRIVERPATH = "/home/yury/PycharmProjects/Otus_Selenium/otus_selenium/chromedriver"
 FIREFOXDRIVERPATH = '/home/yury/PycharmProjects/Otus_Selenium/otus_selenium/geckodriver'
 
+# базовые настройки для логирования
 logging.basicConfig(filename='/home/yury/PycharmProjects/selenium_otus/otus_selenium/lolo.log', level=logging.INFO)
 
-server = Server(r'/home/yury/Desktop/browsermob-proxy-2.1.4/bin/browsermob-proxy')
-server.start()
+# настройка логирования http запросов через proxy
+# server = Server(r'/home/yury/Desktop/browsermob-proxy-2.1.4/bin/browsermob-proxy')
+# server.start()
 
-
-@pytest.fixture(scope='session')
-def my_proxy():
-    """My proxy"""
-    proxy = server.create_proxy()
-    proxy.new_har()
-    return proxy
+# for test proxy
+# @pytest.fixture(scope='session')
+# def my_proxy():
+#     """My proxy"""
+#     proxy = server.create_proxy()
+#     proxy.new_har()
+#     return proxy
 
 
 class MyListener(AbstractEventListener):
@@ -84,7 +86,9 @@ def pytest_addoption(parser):
 
 
 @pytest.fixture(scope="session", autouse=True)
-def driver(request, my_proxy):
+def driver(request):
+    # for test proxy (check all comments)
+    # def driver(request, my_proxy):
     """Driver"""
     browser = request.config.getoption("--name_browser")
     if browser == 'firefox':
@@ -98,8 +102,9 @@ def driver(request, my_proxy):
         profile.set_preference('app.update.enabled', False)
         profile.accept_untrusted_certs = True
         options = FirefoxOptions()
-        url = urllib.parse.urlparse(my_proxy.proxy).path
-        options.add_argument('--proxy-server=%s' % url)
+        # for test proxy
+        # url = urllib.parse.urlparse(my_proxy.proxy).path
+        # options.add_argument('--proxy-server=%s' % url)
         options.add_argument("--start-fullscreen")
         options.add_argument("--headless")
         w_d = EventFiringWebDriver(webdriver.Firefox(firefox_options=options,
@@ -114,8 +119,9 @@ def driver(request, my_proxy):
         capabilities['acceptSslCerts'] = True
         capabilities['acceptInsecureCerts'] = True
         options = ChromeOptions()
-        url = urllib.parse.urlparse(my_proxy.proxy).path
-        options.add_argument('--proxy-server=%s' % url)
+        # for test proxy
+        # url = urllib.parse.urlparse(my_proxy.proxy).path
+        # options.add_argument('--proxy-server=%s' % url)
         options.add_argument("--start-fullscreen")
         options.add_argument("--headless")
         w_d = EventFiringWebDriver(webdriver.Chrome(chrome_options=options,
