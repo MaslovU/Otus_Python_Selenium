@@ -1,4 +1,6 @@
 """Tests"""
+import os
+
 import pytest
 from otus_selenium.models.utility_methods import create_list, \
     edit_items_kotlin, edit_items_cat, delete_items
@@ -25,11 +27,12 @@ class TestProductPage:
             delete_items(driver, listoc)
         assert 'product&user_token' in driver.current_url
 
-    # def test_check_item(self, driver):
-    #     """Check item"""
-    #     listoc = create_list(driver)
-    #     assert "Kotlin" in listoc
-    #
+    @pytest.mark.skipif('3 != 2', reason='mathematics')
+    def test_check_item(self, driver):
+        """Check item"""
+        listoc = create_list(driver)
+        assert "Kotlin" in listoc
+
     # def test_edit_item(self, driver):
     #     """Edit"""
     #     listoc = create_list(driver)
@@ -49,16 +52,17 @@ class TestProductPage:
 
     # @pytest.mark.usefixtures('add_images')
     # @pytest.mark.usefixtures('action_with_image')
-    # def test_add_three_images(self, driver):
-    #     """Add images"""
-    #     time.sleep(2)
-    #     dirname = os.path.dirname(__file__)
-    #     filename = os.path.join(dirname, 'image3.jpg')
-    #     input_manager = driver.find_element_by_css_selector('button-upload')
-    #     # driver.find_element_by_id('button-upload').click()
-    #     # input_manager = driver.find_element_by_id('//*[@id="form-upload"]')
-    #     input_manager.send_keys(filename)
-    #
-    # def test_delete_images(self):
-    #     """Delete images"""
-    #     pass
+    @pytest.mark.xfail(condition=lambda: True, reason='oops!')
+    def test_add_three_images(self, driver):
+        """Add images"""
+        dirname = os.path.dirname(__file__)
+        filename = os.path.join(dirname, 'image3.jpg')
+        input_manager = driver.find_element_by_css_selector('button-upload')
+        # driver.find_element_by_id('button-upload').click()
+        # input_manager = driver.find_element_by_id('//*[@id="form-upload"]')
+        input_manager.send_keys(filename)
+
+    @pytest.mark.skipif('2+2 != 5', reason='Sorry!')
+    def test_delete_images(self):
+        """Delete images"""
+        pass
