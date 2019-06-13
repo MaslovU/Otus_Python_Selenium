@@ -5,7 +5,7 @@ from otus_selenium.models.utility_methods import create_list, \
 import logging
 
 
-@pytest.mark.usefixtures('product_page_add')
+# @pytest.mark.usefixtures('product_page_add')
 @pytest.mark.usefixtures('product_page_choice')
 @pytest.mark.usefixtures('page_waiting')
 @pytest.mark.usefixtures('login_for_test')
@@ -25,27 +25,27 @@ class TestProductPage:
             delete_items(driver, listoc)
         assert 'product&user_token' in driver.current_url
 
-    def test_check_item(self, driver):
-        """Check item"""
-        listoc = create_list(driver)
-        assert "Kotlin" in listoc
-
-    def test_edit_item(self, driver):
-        """Edit"""
-        listoc = create_list(driver)
-        edit_items_kotlin(driver, listoc)
-        listoc = create_list(driver)
-        assert "Cat" in listoc
-        edit_items_cat(driver, listoc)
-        listoc = create_list(driver)
-        assert "Kotlin" in listoc
-
-    def test_delete_item(self, driver):
-        """Delete"""
-        listoc = create_list(driver)
-        delete_items(driver, listoc)
-        new_list = create_list(driver)
-        assert 'Kotlin' not in new_list
+    # def test_check_item(self, driver):
+    #     """Check item"""
+    #     listoc = create_list(driver)
+    #     assert "Kotlin" in listoc
+    #
+    # def test_edit_item(self, driver):
+    #     """Edit"""
+    #     listoc = create_list(driver)
+    #     edit_items_kotlin(driver, listoc)
+    #     listoc = create_list(driver)
+    #     assert "Cat" in listoc
+    #     edit_items_cat(driver, listoc)
+    #     listoc = create_list(driver)
+    #     assert "Kotlin" in listoc
+    #
+    # def test_delete_item(self, driver):
+    #     """Delete"""
+    #     listoc = create_list(driver)
+    #     delete_items(driver, listoc)
+    #     new_list = create_list(driver)
+    #     assert 'Kotlin' not in new_list
 
     # @pytest.mark.usefixtures('add_images')
     # @pytest.mark.usefixtures('action_with_image')

@@ -3,6 +3,7 @@ import logging
 import sys
 import time
 import urllib.parse
+import platform
 
 import pytest
 from selenium import webdriver
@@ -37,30 +38,30 @@ class MyListener(AbstractEventListener):
     def before_find(self, by, value, driver):
         """for logs"""
         logging.info('Message before find')
-
-    def after_find(self, by, value, driver):
-        """for logs"""
-        logging.info('Message after find')
-
-    def before_click(self, element, driver):
-        """for logs"""
-        logging.info("Start click")
-
-    def after_click(self, element, driver):
-        """for logs"""
-        logging.info('Message after click')
-
-    def before_quit(self, driver):
-        """for logs"""
-        logging.info('before quit')
-
-    def after_quit(self, driver):
-        """for logs"""
-        logging.info('by!')
-
-    def on_exception(self, exception, driver):
-        """for logs"""
-        driver.save_screenshot('/home/yury/PycharmProjects/selenium_otus/otus_selenium/screenshots/exceptions.png')
+#
+#     def after_find(self, by, value, driver):
+#         """for logs"""
+#         logging.info('Message after find')
+#
+#     def before_click(self, element, driver):
+#         """for logs"""
+#         logging.info("Start click")
+#
+#     def after_click(self, element, driver):
+#         """for logs"""
+#         logging.info('Message after click')
+#
+#     def before_quit(self, driver):
+#         """for logs"""
+#         logging.info('before quit')
+#
+#     def after_quit(self, driver):
+#         """for logs"""
+#         logging.info('by!')
+#
+#     def on_exception(self, exception, driver):
+#         """for logs"""
+#         driver.save_screenshot('/home/yury/PycharmProjects/selenium_otus/otus_selenium/screenshots/exceptions.png')
 
 
 def pytest_addoption(parser):
@@ -319,3 +320,62 @@ def action_with_download(download_page):
     """For pro"""
     download_page.add_new_button()
     download_page.download_file_name('image1')
+
+
+# tow methods for json
+@pytest.mark.usefixtures("environment_info")
+@pytest.fixture(scope='session', autouse=True)
+def extra_json_environment(request, environment_info):
+    request.config._json_environment.append(("dist", environment_info[1]))
+
+
+@pytest.hookimpl(tryfirst=True, hookwrapper=True)
+def pytest_runtest_makereport(item, call):
+    outcome = yield
+    report = outcome.get_result()
+    if report.when == 'call':
+        # only add this during call instead of during any stage
+        report.test_metadata = 'whatever'
+        # edit stage metadata
+        report.stage_metadata = {
+            'lets': 'do it',
+            'time': time.time(),
+
+        }
+    elif report.when == 'setup':
+        report.stage_metadata = {
+            'unknown': 'imformation'
+        }
+    elif report.when == 'teardown':
+        report.stage_metadata = {
+            'hey': 'by by'
+        }
+
+
+@pytest.fixture(scope="session")
+def environment_info():
+    os_platform = platform.platform()
+    linux_dist = platform.linux_distribution()
+    python_version = platform.python_version()
+    return os_platform, linux_dist, python_version
+
+
+# for html reports
+# @pytest.mark.hookwrapper
+# def pytest_runtest_makereport(item, call):
+#     outcome = yield
+#     report = outcome.get_result()
+#     extra = getattr(report, 'extra', [])
+#     if report.when == 'call':
+#         report.extra = extra
+#
+#
+# @pytest.mark.usefixtures("environment_info")
+# @pytest.fixture(scope='session', autouse=True)
+# def configure_html_report_env(request, environment_info):
+#     request.config._metadata.update(
+#         {"browser": request.config.getoption("--name_browser"),
+#          "address": request.config.getoption("--urlopt"
+#          # here can add options to enviroment
+#          )})
+#     yield
