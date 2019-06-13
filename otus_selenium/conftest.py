@@ -112,9 +112,11 @@ def driver(request):
                                    MyListener())
         w_d.maximize_window()
     elif browser == 'chrome':
-        capabilities = webdriver.DesiredCapabilities.CHROME.copy()
+        # for logging
         d = webdriver.DesiredCapabilities.CHROME
         d['loggingPrefs'] = {'performance': 'ALL'}
+        # for usial tests
+        capabilities = webdriver.DesiredCapabilities.CHROME.copy()
         capabilities['loggingPrefs'] = {'browser': 'ALL'}
         capabilities['acceptSslCerts'] = True
         capabilities['acceptInsecureCerts'] = True
