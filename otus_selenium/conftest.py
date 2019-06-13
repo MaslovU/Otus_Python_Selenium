@@ -92,6 +92,10 @@ def driver(request):
     """Driver"""
     browser = request.config.getoption("--name_browser")
     if browser == 'firefox':
+        # for logging
+        d = webdriver.DesiredCapabilities.FIREFOX
+        d['loggingPrefs'] = {'performance': 'ALL'}
+        # for usial tests
         capabilities = webdriver.DesiredCapabilities.FIREFOX.copy()
         capabilities['loggingPrefs'] = {'browser': 'ALL'}
         capabilities['timeouts'] = {'implicit': 300000, 'pageLoad': 300000, 'script': 30000}
