@@ -1,0 +1,2 @@
+When start parsing log (if __name__ == '__main__'), need select log file ACCESSLOG or ACCESSLOG2.
+If need parse all files, then select MERGELOG.
