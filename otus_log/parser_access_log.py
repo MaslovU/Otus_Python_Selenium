@@ -3,6 +3,7 @@ import re
 from collections import Counter
 import json
 from fileinput import FileInput
+import os.path
 
 ACCESSLOG = '/home/yury/PycharmProjects/selenium_otus/otus_log/access.log'
 ACCESSLOG2 = '/home/yury/PycharmProjects/selenium_otus/otus_log/access2.log'
@@ -49,7 +50,13 @@ def count_ip(ip_list, summ=0):
 
 
 if __name__ == '__main__':
+    try:
+        os.path.isfile(ACCESSLOG) and os.path.isfile(ACCESSLOG2)
+    except FileNotFoundError:
+        print("These files don't exist!")
+
     res = count_ip(read_log(ACCESSLOG2))
     print(res)
     with open('res.json', 'w') as f:
         json.dump(res, f)
+
