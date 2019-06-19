@@ -50,17 +50,17 @@ class TestProductPage:
     #     new_list = create_list(driver)
     #     assert 'Kotlin' not in new_list
 
-    # @pytest.mark.usefixtures('add_images')
-    # @pytest.mark.usefixtures('action_with_image')
-    @pytest.mark.xfail(condition=lambda: True, reason='oops!')
-    # def test_add_three_images(self, driver):
-    #     """Add images"""
-    #     dirname = os.path.dirname(__file__)
-    #     filename = os.path.join(dirname, 'image3.jpg')
-    #     input_manager = driver.find_element_by_css_selector('button-upload')
-    #     # driver.find_element_by_id('button-upload').click()
-    #     # input_manager = driver.find_element_by_id('//*[@id="form-upload"]')
-    #     input_manager.send_keys(filename)
+    @pytest.mark.usefixtures('add_images')
+    @pytest.mark.usefixtures('action_with_image')
+    # @pytest.mark.xfail(condition=lambda: True, reason='oops!')
+    def test_add_three_images(self, driver):
+        """Add images"""
+        dirname = os.path.dirname(__file__)
+        filename = os.path.join(dirname, 'image3.jpg')
+        input_manager = driver.find_element_by_css_selector('button-upload')
+        # driver.find_element_by_id('button-upload').click()
+        # input_manager = driver.find_element_by_id('//*[@id="form-upload"]')
+        input_manager.send_keys(filename)
 
     @pytest.mark.skipif('2+2 != 5', reason='Sorry!')
     def test_delete_images(self):
