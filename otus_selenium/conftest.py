@@ -12,12 +12,20 @@ from selenium.webdriver import ChromeOptions, FirefoxOptions
 from otus_selenium.models.page_objects.page_objects import *
 from selenium.webdriver.support.events import EventFiringWebDriver, AbstractEventListener
 
+import sqlite3
+from otus_selenium.sqlite3 import sqlite3_mas
+
+
+conn = sqlite3.connect('/home/yury/maslov.db')
+cursor = conn.cursor()
+
 
 CHROMEDRIVERPATH = "/home/yury/PycharmProjects/Otus_Selenium/otus_selenium/chromedriver"
 FIREFOXDRIVERPATH = '/home/yury/PycharmProjects/Otus_Selenium/otus_selenium/geckodriver'
 
 # базовые настройки для логирования
-logging.basicConfig(filename='/home/yury/PycharmProjects/selenium_otus/otus_selenium/lolo.log', level=logging.INFO)
+# logging.basicConfig(filename='/home/yury/PycharmProjects/selenium_otus/otus_selenium/lolo.log', level=logging.INFO)
+logging.basicConfig(level=logging.INFO)
 
 # настройка логирования http запросов через proxy
 # server = Server(r'/home/yury/Desktop/browsermob-proxy-2.1.4/bin/browsermob-proxy')
@@ -37,7 +45,8 @@ class MyListener(AbstractEventListener):
 
     def before_find(self, by, value, driver):
         """for logs"""
-        logging.info('Message before find')
+        log = 'Message before find'
+        sqlite3_mas(log)
 #
 #     def after_find(self, by, value, driver):
 #         """for logs"""
