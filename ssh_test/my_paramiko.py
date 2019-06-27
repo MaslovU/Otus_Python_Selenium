@@ -4,7 +4,7 @@ import paramiko
 from otus_selenium.go_away import HOST, NAME, SECRET, PORT
 
 
-def connect_to_paramiko_and_stop(command):
+def connect_to_paramiko_send_command(command):
     """Function"""
     client = paramiko.SSHClient()
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -17,13 +17,13 @@ def connect_to_paramiko_and_stop(command):
 
 def test_stop_apache_server():
     """Stop server"""
-    data = connect_to_paramiko_and_stop('stop')
+    data = connect_to_paramiko_send_command('stop')
     assert 'active' not in str(data)
 
 
 def test_start_apache_server():
     """Start and check status"""
-    connect_to_paramiko_and_stop('start')
-    data = connect_to_paramiko_and_stop('status')
+    connect_to_paramiko_send_command('start')
+    data = connect_to_paramiko_send_command('status')
     assert 'active' in str(data)
 
