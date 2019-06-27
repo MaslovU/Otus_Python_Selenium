@@ -389,32 +389,3 @@ def environment_info():
 #          # here can add options to enviroment
 #          )})
 #     yield
-
-
-@pytest.fixture(scope='function')
-def start_apache_server():
-    client = paramiko.SSHClient()
-    client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    client.connect(hostname=HOST, username=NAME, password=SECRET, port=PORT)
-    stdin, stdout, stderr = client.exec_command('sudo service apache2 start')
-    # stdin, stdout, stderr = client.exec_command('service apache2 status')
-    # stdin, stdout, stderr = client.exec_command('sudo service apache2 start')
-    data = stdout.read() + stderr.read()
-
-    # print(data)
-    client.close()
-    return data
-
-
-@pytest.fixture(scope='function')
-def stop_apache_server():
-    client = paramiko.SSHClient()
-    client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    client.connect(hostname=HOST, username=NAME, password=SECRET, port=PORT)
-    client.exec_command('sudo service apache2 stop')
-    # stdin, stdout, stderr = client.exec_command('service apache2 status')
-    # # stdin, stdout, stderr = client.exec_command('sudo service apache2 stop')
-    # data = stdout.read() + stderr.read()
-    #
-    # print(data)
-    client.close()

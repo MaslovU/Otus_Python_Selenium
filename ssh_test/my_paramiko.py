@@ -9,7 +9,7 @@ def connect_to_paramiko_and_stop(command):
     client = paramiko.SSHClient()
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     client.connect(hostname=HOST, username=NAME, password=SECRET, port=PORT)
-    stdin, stdout, stderr = client.exec_command('sudo service apache2 ' + command)
+    stdin, stdout, stderr = client.exec_command('sudo service apache2 ' + command + "")
     data = stdout.read() + stderr.read()
     client.close()
     return data
