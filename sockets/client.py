@@ -18,6 +18,14 @@ URL = ARGS.url
 PORT = ARGS.port
 
 
+def parser_of_server_response(resp):
+    """Parser"""
+    parsed = resp.decode('utf-8')
+    parser = parsed.split(' ')
+    cod_of_amswer = parser[1]
+    print('This is the server response code: {}'.format(cod_of_amswer))
+
+
 def run(url, port):
     """Run sockets"""
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -26,11 +34,7 @@ def run(url, port):
     s.send(b'GET / HTTP/1.0\r\n\r\n')
     resp = s.recv(1024)
     s.close()
-    return resp
-
-
-request = run(URL, PORT)
-print(request)
+    parser_of_server_response(resp)
 
 
 if __name__ == '__main__':
